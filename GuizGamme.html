@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>quiz Gamme</title>
+</head>
+<body>
+
+<h2 id="question"></h2>
+<div id="answers"></div>
+<p id="result"></p>
+
+<script>
+let questions = [
+  {
+    question: "2 + 2 = ?",
+    answers: ["3", "4", "5"],
+    correct: 1
+  },
+  {
+    question: "5 * 2 = ?",
+    answers: ["10", "8", "12"],
+    correct: 0
+  }
+];
+
+let current = 0;
+let score = 0;
+
+function showQuestion() {
+  let q = questions[current];
+  document.getElementById("question").textContent = q.question;
+  let answersDiv = document.getElementById("answers");
+  answersDiv.innerHTML = "";
+
+  q.answers.forEach((answer, index) => {
+    let btn = document.createElement("button");
+    btn.textContent = answer;
+    btn.onclick = function() {
+      if (index === q.correct) {
+        score++;
+        document.getElementById("result").textContent = "Correct!";
+      } else {
+        document.getElementById("result").textContent = "Wrong!";
+      }
+      current++;
+      if (current < questions.length) {
+        showQuestion();
+      } else {
+        document.getElementById("question").textContent =
+          "Final Score: " + score;
+        answersDiv.innerHTML = "";
+      }
+    };
+    answersDiv.appendChild(btn);
+  });
+}
+
+showQuestion();
+</script>
+
+</body>
+</html>
