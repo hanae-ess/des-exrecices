@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Multi Carousel</title>
+
+<style>
+body{
+  margin:0;
+  font-family:Arial;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+}
+
+h2{
+  margin-top:20px;
+}
+
+.slider-container{
+  width:900px;
+  overflow:hidden;
+  position:relative;
+  margin-top:30px;
+}
+
+.slider{
+  display:flex;
+  transition: transform 0.5s ease;
+}
+
+.slider img{
+  width:300px;
+  height:250px;
+  object-fit:cover;
+}
+
+.buttons{
+  position:absolute;
+  width:100%;
+  top:50%;
+  display:flex;
+  justify-content:space-between;
+  transform:translateY(-50%);
+}
+
+button{
+  background:rgba(0,0,0,0.5);
+  color:white;
+  border:none;
+  padding:10px 15px;
+  cursor:pointer;
+  font-size:18px;
+}
+</style>
+</head>
+<body>
+
+<h2>Carousel</h2>
+
+<div class="slider-container">
+  
+  <div class="slider" id="slider">
+    <img src="image1.jpg">
+    <img src="image2.jpg">
+    <img src="image3.jpg">
+    <img src="image4.jpg">
+    <img src="image5.jpg">
+    <img src="image6.jpg">
+  </div>
+
+  <div class="buttons">
+    <button id="prev">❮</button>
+    <button id="next">❯</button>
+  </div>
+
+</div>
+
+<script>
+let slider = document.getElementById("slider");
+let nextBtn = document.getElementById("next");
+let prevBtn = document.getElementById("prev");
+
+let index = 0;
+let visibleSlides = 3;
+let totalSlides = slider.children.length;
+
+nextBtn.addEventListener("click", () => {
+  if(index < totalSlides - visibleSlides){
+    index++;
+    updateSlider();
+  }
+});
+
+prevBtn.addEventListener("click", () => {
+  if(index > 0){
+    index--;
+    updateSlider();
+  }
+});
+
+function updateSlider(){
+  slider.style.transform = `translateX(-${index * 300}px)`;
+}
+</script>
+
+</body>
+</html>

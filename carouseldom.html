@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Pro Carousel</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: #f4f4f4;
+}
+
+h2 {
+  margin-top: 20px;
+}
+
+.slider {
+  position: relative;
+  width: 500px;
+  overflow: hidden;
+  margin-top: 30px;
+}
+
+.slider img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  transform: translateY(-50%);
+}
+
+button {
+  background: rgba(0,0,0,0.5);
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  font-size: 18px;
+}
+
+.dots {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  margin: 5px;
+  border-radius: 50%;
+  background: gray;
+  cursor: pointer;
+}
+
+.active {
+  background: black;
+}
+</style>
+</head>
+<body>
+
+<h2>Dom Carousel</h2>
+
+<div class="slider">
+  <img id="slide" src="image1.jpg">
+  
+  <div class="buttons">
+    <button id="prev">❮</button>
+    <button id="next">❯</button>
+  </div>
+</div>
+
+<div class="dots" id="dots"></div>
+
+<script>
+let images = ["image1.jpg", "image2.jpg", "image3.jpg", "image4.jpg", "image5.jpg"];
+let current = 0;
+
+let slide = document.getElementById("slide");
+let nextBtn = document.getElementById("next");
+let prevBtn = document.getElementById("prev");
+let dotsContainer = document.getElementById("dots");
+
+function showSlide() {
+  slide.style.opacity = 0;
+
+  setTimeout(() => {
+    slide.src = images[current];
+    slide.style.opacity = 1;
+    // updateDots();
+  }, 200);
+}
+
+function nextSlide() {
+  current++;
+  if (current >= images.length) current = 0;
+  showSlide();
+}
+
+function prevSlide() {
+  current--;
+  if (current < 0) current = images.length - 1;
+  showSlide();
+}
+
+nextBtn.addEventListener("click", nextSlide);
+prevBtn.addEventListener("click", prevSlide);
+
+
+
+// CREATE DOTS
+images.forEach((img, index) => {
+  let dot = document.createElement("div");
+  dot.classList.add("dot");
+
+  dot.addEventListener("click", () => {
+    current = index;
+    showSlide();
+  });
+
+  dotsContainer.appendChild(dot);
+});
+
+function updateDots() {
+  let allDots = document.querySelectorAll(".dot");
+  allDots.forEach(dot => dot.classList.remove("active"));
+  allDots[current].classList.add("active");
+}
+
+updateDots();
+</script>
+
+</body>
+</html>
